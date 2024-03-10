@@ -1,0 +1,119 @@
+const int LED_VERDE = 11;
+const int LED_ROJO = 12;
+const int LED_AMARILLO = 13;
+
+void setup() {
+  // Configura los pines como salida
+  pinMode(LED_VERDE, OUTPUT);
+  pinMode(LED_ROJO, OUTPUT);
+  pinMode(LED_AMARILLO, OUTPUT);
+
+  // Inicializa las luces apagadas
+  digitalWrite(LED_VERDE, LOW);
+  digitalWrite(LED_ROJO, LOW);
+  digitalWrite(LED_AMARILLO, LOW);
+
+  // Inicia la comunicación serial
+  Serial.begin(9600);
+  Serial.println("##### Menu #####");
+  Serial.println("### Escriba los numeros del 1 al 9 ###");
+}
+
+void loop() {
+  // Si hay datos disponibles en el Serial Monitor
+  if (Serial.available()) {
+    // Lee el caracter
+    char caracter = Serial.read();
+
+    // Actúa según el caracter recibido
+    switch (caracter) {
+      case '1':
+        encenderLuzVerde();
+        break;
+      case '2':
+        apagarLuzVerde();
+        break;
+      case '3':
+        encenderLuzRoja();
+        break;
+      case '4':
+        apagarLuzRoja();
+        break;
+      case '5':
+        encenderLuzAmarilla();
+        break;
+      case '6':
+        apagarLuzAmarilla();
+        break;
+      case '7':
+        encenderTodasLasLuces();
+        break;
+      case '8':
+        apagarTodasLasLuces();
+        break;
+      case '9':
+        modoIntermitente();
+        break;
+      default:
+        // Muestra un mensaje de error
+        Serial.println("Caracter no reconocido");
+    }
+  }
+}
+
+void encenderLuzVerde() {
+  digitalWrite(LED_VERDE, HIGH);
+  Serial.println("### Luz verde encendida ###");
+}
+
+void apagarLuzVerde() {
+  digitalWrite(LED_VERDE, LOW);
+  Serial.println("### Luz verde apagada ###");
+}
+
+void encenderLuzRoja() {
+  digitalWrite(LED_ROJO, HIGH);
+  Serial.println("### Luz roja encendida ###");
+}
+
+void apagarLuzRoja() {
+  digitalWrite(LED_ROJO, LOW);
+  Serial.println("### Luz roja apagada ###");
+}
+
+void encenderLuzAmarilla() {
+  digitalWrite(LED_AMARILLO, HIGH);
+  Serial.println("### Luz amarilla encendida ###");
+}
+
+void apagarLuzAmarilla() {
+  digitalWrite(LED_AMARILLO, LOW);
+  Serial.println("### Luz amarilla apagada ###");
+}
+
+void encenderTodasLasLuces() {
+  digitalWrite(LED_VERDE, HIGH);
+  digitalWrite(LED_ROJO, HIGH);
+  digitalWrite(LED_AMARILLO, HIGH);
+  Serial.println("### Todas las luces encendidas ###");
+}
+
+void apagarTodasLasLuces() {
+  digitalWrite(LED_VERDE, LOW);
+  digitalWrite(LED_ROJO, LOW);
+  digitalWrite(LED_AMARILLO, LOW);
+  Serial.println("### Todas las luces apagadas ###");
+}
+
+void modoIntermitente() {
+  while (true) {
+    digitalWrite(LED_VERDE, HIGH);
+    digitalWrite(LED_ROJO, HIGH);
+    digitalWrite(LED_AMARILLO, HIGH);
+    delay(1000);
+    digitalWrite(LED_VERDE, LOW);
+    digitalWrite(LED_ROJO, LOW);
+    digitalWrite(LED_AMARILLO, LOW);
+    delay(1000);
+  }
+}
